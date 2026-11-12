@@ -30,10 +30,10 @@ export function AuditPage({ me }: { me: Me }) {
   const pages = data ? Math.max(1, Math.ceil(data.total / data.pageSize)) : 1;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">Audit log</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Audit log</h1>
           <p className="text-sm text-muted-foreground">
             Every sign-in, reveal, export, and write is recorded here — never the secret values
             themselves. AWS CloudTrail is your independent second trail.
@@ -50,7 +50,7 @@ export function AuditPage({ me }: { me: Me }) {
         <Input placeholder="project" value={filters.project} onChange={(e) => { setFilters({ ...filters, project: e.target.value }); setPage(1); }} className="w-40" />
         <Input placeholder="action" value={filters.action} onChange={(e) => { setFilters({ ...filters, action: e.target.value }); setPage(1); }} className="w-40" />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>

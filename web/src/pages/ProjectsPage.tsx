@@ -30,10 +30,10 @@ export function ProjectsPage({ me }: { me: Me }) {
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">Projects</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
           <p className="text-sm text-muted-foreground">
             Each project maps to a path in AWS SSM Parameter Store —{" "}
             <code className="font-mono text-xs">/ferry/&lt;project&gt;/&lt;env&gt;/&lt;KEY&gt;</code>.

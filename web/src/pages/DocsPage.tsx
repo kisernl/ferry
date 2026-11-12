@@ -18,7 +18,7 @@ export function DocsPage({ me }: { me: Me }) {
   return (
     <div className="max-w-2xl space-y-8">
       <div>
-        <h1 className="text-xl font-semibold">How Ferry works</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">How Ferry works</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Ferry is a web interface over AWS SSM Parameter Store. Secret values live in your AWS
           account, encrypted with KMS — they are never stored in this app's database, which only

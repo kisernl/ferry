@@ -31,10 +31,10 @@ export function SetupPage({ me }: { me: Me }) {
   if (me.role !== "admin") return <p>Admins only.</p>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">Setup check</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Setup check</h1>
           <p className="text-sm text-muted-foreground">
             Verifies that this server's AWS credentials can use Parameter Store under your prefix —
             including a real write/delete probe. Run this after changing IAM policies.

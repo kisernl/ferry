@@ -53,12 +53,14 @@ export function GithubPage({ me }: { me: Me }) {
   const selectedOwners = new Set(data?.owners.filter((o) => o.mode === "selected").map((o) => o.owner));
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">GitHub Actions access</h1>
-      <p className="text-sm text-muted-foreground">
-        Connect a GitHub owner so CI can read secrets through OIDC — nothing secret is stored in GitHub,
-        and CI keeps working if this app is down. Run the generated script once with your own AWS credentials.
-      </p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight">GitHub Actions access</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Connect a GitHub owner so CI can read secrets through OIDC — nothing secret is stored in GitHub,
+          and CI keeps working if this app is down. Run the generated script once with your own AWS credentials.
+        </p>
+      </div>
 
       <Card>
         <CardHeader><CardTitle className="text-base">Connect an owner</CardTitle></CardHeader>

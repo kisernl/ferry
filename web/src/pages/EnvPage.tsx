@@ -62,10 +62,10 @@ export function EnvPage({ me }: { me: Me }) {
     qc.invalidateQueries({ queryKey: ["keys", projectName, env] });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Link to="/" className="text-muted-foreground hover:text-foreground">←</Link>
-        <h1 className="font-mono text-xl font-semibold">{projectName}</h1>
+        <h1 className="font-mono text-2xl font-semibold tracking-tight">{projectName}</h1>
         {isProtected && <Badge variant="warning">protected</Badge>}
         <span className="ml-auto hidden text-xs text-muted-foreground sm:block">
           {me.role === "viewer"
@@ -143,7 +143,7 @@ export function EnvPage({ me }: { me: Me }) {
         </div>
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>

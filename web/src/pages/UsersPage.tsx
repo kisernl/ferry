@@ -26,13 +26,15 @@ export function UsersPage({ me }: { me: Me }) {
   if (me.role !== "admin") return <p>Admins only.</p>;
 
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-semibold">Users</h1>
-      <p className="text-sm text-muted-foreground">
-        Admins are configured via <code>ADMIN_GITHUB_USERS</code> and are not listed as such here —
-        this table toggles everyone else between viewer and editor.
-      </p>
-      <div className="rounded-md border">
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight">Users</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Admins are configured via <code>ADMIN_GITHUB_USERS</code> and are not listed as such here —
+          this table toggles everyone else between viewer and editor.
+        </p>
+      </div>
+      <div className="rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
