@@ -1,0 +1,9 @@
+{
+  "Sid": "CheckGithubSetup",
+  "Effect": "Allow",
+  "Action": ["iam:GetRole", "iam:GetOpenIDConnectProvider"],
+  "Resource": [
+    "arn:aws:iam::{ACCOUNT_ID}:role/{PREFIX}-*",
+    "arn:aws:iam::{ACCOUNT_ID}:oidc-provider/token.actions.githubusercontent.com"
+  ]
+}
