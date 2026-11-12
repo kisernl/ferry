@@ -416,9 +416,13 @@ export class ParameterService {
     return `/${this.prefix}/${project}/`;
   }
 
-  /** Setup screen probes. Each returns { ok, detail }. */
-  async probe(): Promise<{ action: string; ok: boolean; detail: string }[]> {
-    const results: { action: string; ok: boolean; detail: string }[] = [];
+  /** Setup screen probes. On failure, `detail` is the AWS error name and
+   *  `message` the full error (e.g. "not authorized to perform: ssm:PutParameter
+   *  on resource: ..."), so the UI can point at the missing permission. */
+  async probe(): Promise<
+    { action: string; ok: boolean; detail: string; message?: string }[]
+  > {
+    const results: { action: string; ok: boolean; detail: string; message?: string }[] = [];
     const run = async (action: string, fn: () => Promise<unknown>) => {
       try {
         await fn();
@@ -428,6 +432,7 @@ export class ParameterService {
           action,
           ok: false,
           detail: (e as { name?: string })?.name ?? String(e),
+          message: e instanceof Error ? e.message : undefined,
         });
       }
     };

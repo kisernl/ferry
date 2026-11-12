@@ -45,12 +45,52 @@ function optionalIamPolicy(accountId: string, prefix: string) {
   };
 }
 
+/** Identity resolution must not be fatal: when the server has no working AWS
+ *  credentials this page is exactly where the admin goes to fix that, so we
+ *  still return the config and IAM policies (with an {ACCOUNT_ID} placeholder). */
+async function resolveIdentity(ctx: Ctx) {
+  try {
+    const { account, arn } = await ctx.github.callerIdentity();
+    return { account, arn, error: null as string | null };
+  } catch (e) {
+    return {
+      account: null,
+      arn: null,
+      error: (e as { name?: string })?.name ?? String(e),
+    };
+  }
+}
+
+function setupPayload(ctx: Ctx, id: Awaited<ReturnType<typeof resolveIdentity>>) {
+  const account = id.account ?? "{ACCOUNT_ID}";
+  return {
+    identity: {
+      account: id.account,
+      arn: id.arn,
+      error: id.error,
+      region: ctx.config.AWS_REGION,
+      prefix: ctx.config.FERRY_PREFIX,
+      kmsKeyId: ctx.config.KMS_KEY_ID ?? null,
+    },
+    iamPolicy: serverIamPolicy(ctx.config.AWS_REGION, account, ctx.config.FERRY_PREFIX),
+    optionalIamPolicy: optionalIamPolicy(account, ctx.config.FERRY_PREFIX),
+  };
+}
+
 export function setupRoutes(app: FastifyInstance, ctx: Ctx) {
+  /** Identity + policies without running probes — powers the always-visible
+   *  prerequisites on the setup page. */
+  app.get(
+    "/api/setup/info",
+    { preHandler: [ctx.guard.requireRole("admin")] },
+    async () => setupPayload(ctx, await resolveIdentity(ctx)),
+  );
+
   app.post(
     "/api/setup/check",
     { preHandler: [ctx.guard.requireRole("admin")] },
     async (req) => {
-      const identity = await ctx.github.callerIdentity();
+      const id = await resolveIdentity(ctx);
       const checks = await ctx.params.probe();
       audit(ctx.db, {
         action: "setup.check",
@@ -58,19 +98,7 @@ export function setupRoutes(app: FastifyInstance, ctx: Ctx) {
         ip: req.ip,
         detail: checks.every((c) => c.ok) ? "all passed" : "failures",
       });
-      const account = identity.account ?? "{ACCOUNT_ID}";
-      return {
-        identity: {
-          account: identity.account,
-          arn: identity.arn,
-          region: ctx.config.AWS_REGION,
-          prefix: ctx.config.FERRY_PREFIX,
-          kmsKeyId: ctx.config.KMS_KEY_ID ?? null,
-        },
-        checks,
-        iamPolicy: serverIamPolicy(ctx.config.AWS_REGION, account, ctx.config.FERRY_PREFIX),
-        optionalIamPolicy: optionalIamPolicy(account, ctx.config.FERRY_PREFIX),
-      };
+      return { checks, ...setupPayload(ctx, id) };
     },
   );
 }
