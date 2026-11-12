@@ -1,4 +1,4 @@
-import { Link, Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import {
   BookOpen, Folder, Github, LogOut, ScrollText, Settings2, Users,
 } from "lucide-react";
@@ -59,10 +59,15 @@ export default function App() {
     <div className="min-h-screen md:flex">
       <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r bg-card md:flex">
         <div className="px-6 pb-2 pt-7">
-          <Link to="/" className="flex items-center gap-2.5">
+          <a
+            href="https://github.com/kisernl/ferry"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5"
+          >
             <img src="/ferry-icon.png" alt="" className="h-6 w-auto select-none" draggable={false} />
             <span className="text-xl font-semibold uppercase tracking-[0.22em]">Ferry</span>
-          </Link>
+          </a>
         </div>
         <nav className="flex-1 space-y-1 px-3 pt-4">
           <NavItem to="/" end icon={Folder}>Projects</NavItem>
@@ -97,10 +102,15 @@ export default function App() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-10 flex items-center gap-2 overflow-x-auto border-b bg-card px-4 py-3 md:hidden">
-          <Link to="/" className="mr-2 flex shrink-0 items-center gap-2 font-semibold tracking-tight">
+          <a
+            href="https://github.com/kisernl/ferry"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mr-2 flex shrink-0 items-center gap-2 font-semibold tracking-tight"
+          >
             <img src="/ferry-icon.png" alt="" className="h-6 w-auto select-none" draggable={false} />
             <span className="uppercase tracking-[0.22em]">Ferry</span>
-          </Link>
+          </a>
           <MobileNavLink to="/" end>Projects</MobileNavLink>
           <MobileNavLink to="/docs">Docs</MobileNavLink>
           {isAdmin && (

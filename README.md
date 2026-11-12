@@ -1,4 +1,12 @@
-# Ferry
+<p align="center">
+  <img src="web/public/ferry-logo.png" alt="A ferry" width="440" />
+</p>
+
+<h1 align="center">F E R R Y</h1>
+
+<p align="center">
+  Your env vars, ferried safely to AWS Parameter Store — no console required.
+</p>
 
 A self-hosted web app that puts a simple `.env`-style interface over AWS SSM
 Parameter Store. Deploy one container at `ferry.myapp.com`; every secret value
