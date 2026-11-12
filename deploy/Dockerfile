@@ -1,5 +1,5 @@
 # ---- web build ----
-FROM node:22-slim AS web
+FROM node:25-slim AS web
 WORKDIR /app
 RUN corepack enable pnpm
 COPY pnpm-workspace.yaml package.json tsconfig.base.json ./
@@ -11,7 +11,7 @@ COPY web/ web/
 RUN pnpm --filter @ferry/web build
 
 # ---- server build ----
-FROM node:22-slim AS server
+FROM node:25-slim AS server
 WORKDIR /app
 RUN corepack enable pnpm
 COPY pnpm-workspace.yaml package.json tsconfig.base.json ./
@@ -24,7 +24,7 @@ RUN pnpm --filter @ferry/server build \
  && pnpm deploy --legacy --filter @ferry/server --prod /out/server
 
 # ---- runtime ----
-FROM node:22-slim
+FROM node:25-slim
 WORKDIR /app
 ENV NODE_ENV=production
 RUN groupadd -r ferry && useradd -r -g ferry ferry \
