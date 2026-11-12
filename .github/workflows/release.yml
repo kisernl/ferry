@@ -38,6 +38,6 @@ jobs:
           COSIGN_YES: "true"
         run: cosign sign ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
